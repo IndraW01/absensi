@@ -32,4 +32,14 @@ class UserDetail extends Model
     {
         return $this->hasOne(UserCuti::class);
     }
+
+    public function jabatan()
+    {
+        return $this->belongsTo(Jabatan::class);
+    }
+
+    public function lokasi()
+    {
+        return $this->belongsTo(Lokasi::class);
+    }
 }

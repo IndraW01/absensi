@@ -20,20 +20,15 @@ Route::middleware('auth')->group(function () {
 
     // Master Prefix
     Route::prefix('/master')->name('master.')->group(function () {
-        // profile
-        // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-        // Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-        // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
         // Users
-        Route::get('/users', [UserController::class, 'index'])->name('user.index');
-        Route::get('/users/{user}', [UserController::class, 'show'])->name('user.show');
-        Route::get('/users/{user}/edit-user-role', [UserController::class, 'editUserRole'])->name('user.editUserRole');
-        Route::put('/users/{user}/update-user-role', [UserController::class, 'updateUserRole'])->name('user.updateUserRole');
+        Route::get('/users/{user:username}/edit-user-role', [UserController::class, 'editUserRole'])->name('user.editUserRole');
+        Route::put('/users/{user:username}/update-user-role', [UserController::class, 'updateUserRole'])->name('user.updateUserRole');
+        Route::resource('/users', UserController::class)->names('user')->scoped(['user' => 'username']);
 
         // Roles
-        Route::get('/roles/{role}/edit-role-permission', [RoleController::class, 'editRolePermission'])->name('role.editRolePermission');
-        Route::put('/roles/{role}/update-role-permission', [RoleController::class, 'updateRolePermission'])->name('role.updateRolePermission');
+        Route::get('/roles/{role:name}/edit-role-permission', [RoleController::class, 'editRolePermission'])->name('role.editRolePermission');
+        Route::put('/roles/{role:name}/update-role-permission', [RoleController::class, 'updateRolePermission'])->name('role.updateRolePermission');
         Route::resource('/roles', RoleController::class)->names('role')->except('show')->scoped(['role' => 'name']);
 
         // Permission

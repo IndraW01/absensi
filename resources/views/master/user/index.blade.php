@@ -5,9 +5,9 @@
         <div class="card-header py-3 d-flex justify-content-between align-items-center">
             <h6 class="m-0 font-weight-bold text-primary">All Users</h6>
             <div>
-                <a href="{{ route('master.role.create') }}" class="btn btn-primary"><i
+                <a href="{{ route('master.user.create') }}" class="btn btn-primary"><i
                         class="fas fa-plus-circle fa-fw"></i>
-                    Tambah Role</a>
+                    Tambah User</a>
             </div>
         </div>
         <div class="card-body">
@@ -34,6 +34,7 @@
     @push('costum-js')
     <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap4.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         $(function () {
             var table = $('#userDataTable').DataTable({
@@ -56,6 +57,23 @@
                 ],
             });
         });
+
+        // Delete User
+        function deleteUser(user) {
+            Swal.fire({
+                title: `Apa kamu yakin untuk menghapus user ${user}?`,
+                text: "Anda tidak akan dapat mengembalikan ini!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, Hapus!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById(`destroyUser-${user}`).submit()
+                }
+            })
+        }
     </script>
     @endpush
 </x-app-layout>

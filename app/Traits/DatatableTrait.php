@@ -23,13 +23,7 @@ trait DatatableTrait
                 return '<span class="badge badge-primary text-bg-primary">' . $user->getUpperNameRole() . '</span>';
             })
             ->addColumn('action', function (User $user) {
-                return '
-                <a href="' . route('master.user.show', ['user' => $user]) . '" class="edit btn btn-success btn-sm"><i
-                    class="fas fa-eye fa-fw"></i>Show
-                </a>
-                <a href="' . route('master.user.editUserRole', ['user' => $user]) . '" class="edit btn btn-warning btn-sm"><i
-                    class="fas fa-pen fa-fw"></i>Edit Role
-                </a>';
+                return view('components.partials.action', ['data' => $user->username, 'param' => $user, 'route' => 'user', 'title' => 'User']);
             })
             ->rawColumns(['role', 'action'])
             ->make(true);

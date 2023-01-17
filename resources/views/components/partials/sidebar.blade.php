@@ -38,21 +38,21 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Data Master</h6>
                 <a class="collapse-item {{ request()->routeIs('master.user.*') ? 'active' : '' }}"
-                    href="{{ route('master.user.index') }}">Users</a>
+                    href="{{ route('master.user.index') }}"><i class="fas fa-users fa-fw"></i> Users</a>
                 <a class="collapse-item {{ request()->routeIs('master.role.*') ? 'active' : '' }}"
-                    href="{{ route('master.role.index') }}">Roles</a>
+                    href="{{ route('master.role.index') }}"><i class="fas fa-user-tag fa-fw"></i> Roles</a>
                 <a class="collapse-item {{ request()->routeIs('master.permission.*') ? 'active' : '' }}"
-                    href="{{ route('master.permission.index') }}">Permissions</a>
+                    href="{{ route('master.permission.index') }}"><i class="fas fa-users-cog fa-fw"></i> Permissions</a>
                 <a class="collapse-item {{ request()->routeIs('master.shift.*') ? 'active' : '' }}"
-                    href="{{ route('master.shift.index') }}">Shift</a>
+                    href="{{ route('master.shift.index') }}"><i class="fas fa-user-clock fa-fw"></i> Shift</a>
                 <a class="collapse-item {{ request()->routeIs('master.lokasi.*') ? 'active' : '' }}"
-                    href="{{ route('master.lokasi.index') }}">Lokasi</a>
+                    href="{{ route('master.lokasi.index') }}"><i class="fas fa-map-marked-alt fa-fw"></i> Lokasi</a>
                 <a class="collapse-item {{ request()->routeIs('master.status.*') ? 'active' : '' }}"
-                    href="{{ route('master.status.index') }}">Status</a>
+                    href="{{ route('master.status.index') }}"><i class="fas fa-grip-horizontal fa-fw"></i> Status</a>
                 <a class="collapse-item {{ request()->routeIs('master.jabatan.*') ? 'active' : '' }}"
-                    href="{{ route('master.jabatan.index') }}">Jabatan</a>
+                    href="{{ route('master.jabatan.index') }}"><i class="fas fa-user-tie fa-fw"></i> Jabatan</a>
                 <a class="collapse-item {{ request()->routeIs('master.cuti.format.*') ? 'active' : '' }}"
-                    href="{{ route('master.cuti.format.index') }}">Cuti Format</a>
+                    href="{{ route('master.cuti.format.index') }}"><i class="fas fa-weight fa-fw"></i> Cuti Format</a>
             </div>
         </div>
     </li>
