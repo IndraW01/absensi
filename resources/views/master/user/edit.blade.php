@@ -133,8 +133,7 @@
                                     <img src="{{ asset('storage/profile/' . $user->userDetail->foto) }}"
                                         alt="{{ $user->name }}" class="img-thumbnail mb-2" width="100px">
                                     @endif
-                                    <input type="file"
-                                        class="form-control @error('foto', $user->userDetail->foto) is-invalid @enderror"
+                                    <input type="file" class="form-control @error('foto') is-invalid @enderror"
                                         id="foto" name="foto" value="{{ old('foto') }}">
                                     @error('foto')
                                     <div class="invalid-feedback">
@@ -194,9 +193,28 @@
                         <div class="row">
                             <div class="col">
                                 <div class="form-group">
+                                    <label for="shift_id">Shift</label>
+                                    <select class="custom-select" id="shift_id" name="shift_id">
+                                        @foreach ($shifts as $shift)
+                                        <option value="{{ $shift->id }}" @selected(old('shift_id', $user->
+                                            userDetail->shift_id)==$shift->
+                                            id)>{{ $shift->name }} ({{ $shift->jam_masuk->format('H:i') }} | {{
+                                            $shift->jam_keluar->format('H:i') }})
+                                        </option>
+                                        @endforeach
+                                    </select>
+                                    @error('shift_id')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
                                     <label for="alamat">Alamat</label>
                                     <textarea class="form-control" id="alamat" name="alamat"
-                                        rows="2">{{ old('alamat', $user->userDetail->alamat) }}</textarea>
+                                        rows="1">{{ old('alamat', $user->userDetail->alamat) }}</textarea>
                                     @error('alamat')
                                     <div class="invalid-feedback">
                                         {{ $message }}

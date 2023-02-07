@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\Absen\AbsenController as MyAbsenController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Master\AbsenController as AllAbsenController;
 use App\Http\Controllers\Master\CutiFormatController;
 use App\Http\Controllers\Master\JabatanController;
 use App\Http\Controllers\Master\LokasiController;
@@ -17,6 +19,10 @@ Route::redirect('/', 'login');
 Route::middleware('auth')->group(function () {
     // dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    // Profile
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+    Route::put('/profile/{user:username}', [ProfileController::class, 'update'])->name('profile.update');
 
     // Master Prefix
     Route::prefix('/master')->name('master.')->group(function () {
@@ -54,7 +60,12 @@ Route::middleware('auth')->group(function () {
         Route::get('/cuti-format', [CutiFormatController::class, 'index'])->name('cuti.format.index');
         Route::put('/cuti-format/{cutiFormat}/edit', [CutiFormatController::class, 'edit'])->name('cuti.format.edit');
 
-        // Datatable
+        // Absen
+        Route::get('/absen', [AllAbsenController::class, 'index'])->name('absen.index');
+        // Cek Validasi Filter Absen
+        Route::post('/absen/validasi-filter', [MyAbsenController::class, 'filterAbsen'])->name('absen.filterAbsen');
+
+        // Datatable Master
         Route::get('/get-users', [UserController::class, 'datatableUsers'])->name('user.datatable');
         Route::get('/get-roles', [RoleController::class, 'datatableRoles'])->name('role.datatable');
         Route::get('/get-permissions', [PermissionController::class, 'datatablePermissions'])->name('permission.datatable');
@@ -62,6 +73,24 @@ Route::middleware('auth')->group(function () {
         Route::get('/get-lokasis', [LokasiController::class, 'datatableLokasis'])->name('lokasi.datatable');
         Route::get('/get-status', [StatusController::class, 'datatableStatus'])->name('status.datatable');
         Route::get('/get-jabatans', [JabatanController::class, 'datatableJabatans'])->name('jabatan.datatable');
+        Route::get('/get-allAbsens', [AllAbsenController::class, 'datatableAllAbsens'])->name('allAbsen.datatable');
+    });
+
+    // Absen Prefix
+    Route::prefix('/absen')->name('absen.')->group(function () {
+        // Absen
+        Route::get('/', [MyAbsenController::class, 'index'])->name('index');
+        Route::post('/', [MyAbsenController::class, 'absen'])->name('store');
+        Route::get('/show/{absen}', [MyAbsenController::class, 'show'])->name('show');
+
+        // My Absen
+        Route::get('/my-absen', [MyAbsenController::class, 'myAbsen'])->name('myAbsen');
+
+        // Datatable Absen
+        Route::get('/get-myAbsens', [MyAbsenController::class, 'datatableMyAbsens'])->name('myAbsen.datatable');
+
+        // Cek Validasi Filter Absen
+        Route::post('/validasi-filter', [MyAbsenController::class, 'filterAbsen'])->name('filterAbsen');
     });
 });
 

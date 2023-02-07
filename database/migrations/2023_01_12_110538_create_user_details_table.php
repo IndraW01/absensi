@@ -2,6 +2,7 @@
 
 use App\Models\Jabatan;
 use App\Models\Lokasi;
+use App\Models\Shift;
 use App\Models\Status;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
@@ -22,6 +23,7 @@ return new class extends Migration
             $table->foreignIdFor(User::class)->unique()->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignIdFor(Jabatan::class)->nullable();
             $table->foreignIdFor(Lokasi::class)->nullable();
+            $table->foreignIdFor(Shift::class)->constrained();
             $table->string('tempat_lahir')->nullable();
             $table->date('tanggal_lahir')->nullable();
             $table->string('jenis_kelamin')->nullable();

@@ -11,6 +11,7 @@ use Illuminate\Validation\Rule;
 use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
 use App\Models\CutiFormat;
+use App\Models\Shift;
 use App\Services\UploadFotoService;
 use Exception;
 use Illuminate\Support\Arr;
@@ -48,6 +49,7 @@ class UserController extends Controller
         return view('master.user.create', [
             'jabatans' => Jabatan::query()->orderBy('name')->get(),
             'lokasis' => Lokasi::query()->orderBy('name')->get(),
+            'shifts' => Shift::query()->orderBy('jam_masuk')->get(),
             'cutiFormat' => CutiFormat::query()->first(),
         ]);
     }
@@ -61,6 +63,7 @@ class UserController extends Controller
             'password' => ['required', Password::defaults()],
             'jabatan_id' => ['nullable', Rule::exists(Jabatan::class, 'id')],
             'lokasi_id' => ['nullable', Rule::exists(Lokasi::class, 'id')],
+            'shift_id' => ['required', Rule::exists(Shift::class, 'id')],
             'tempat_lahir' => ['nullable'],
             'tanggal_lahir' => ['nullable', 'date'],
             'alamat' => ['nullable', 'max:255'],
@@ -80,7 +83,7 @@ class UserController extends Controller
 
             $user->assignRole('user');
 
-            $validUserDetail = Arr::only($validateUser, ['jabatan_id', 'lokasi_id', 'tempat_lahir', 'tanggal_lahir', 'alamat', 'telepon', 'status', 'jenis_kelamin']);
+            $validUserDetail = Arr::only($validateUser, ['jabatan_id', 'lokasi_id', 'shift_id', 'tempat_lahir', 'tanggal_lahir', 'alamat', 'telepon', 'status', 'jenis_kelamin']);
 
             if ($request->has('foto')) {
                 $namaFoto = $this->uploadFileService->upload($request->file('foto'));
@@ -121,6 +124,7 @@ class UserController extends Controller
             'user' => $user,
             'jabatans' => Jabatan::query()->orderBy('name')->get(),
             'lokasis' => Lokasi::query()->orderBy('name')->get(),
+            'shifts' => Shift::query()->orderBy('jam_masuk')->get(),
         ]);
     }
 
@@ -132,6 +136,7 @@ class UserController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user)],
             'jabatan_id' => ['nullable', Rule::exists(Jabatan::class, 'id')],
             'lokasi_id' => ['nullable', Rule::exists(Lokasi::class, 'id')],
+            'shift_id' => ['required', Rule::exists(Shift::class, 'id')],
             'tempat_lahir' => ['nullable'],
             'tanggal_lahir' => ['nullable', 'date'],
             'alamat' => ['nullable', 'max:255'],
@@ -147,9 +152,9 @@ class UserController extends Controller
 
         DB::beginTransaction();
         try {
-            $user->update(Arr::only($validateUser, ['name', 'username', 'email', 'password']));
+            $user->update(Arr::only($validateUser, ['name', 'username', 'email']));
 
-            $validUserDetail = Arr::only($validateUser, ['jabatan_id', 'lokasi_id', 'tempat_lahir', 'tanggal_lahir', 'alamat', 'telepon', 'status', 'jenis_kelamin']);
+            $validUserDetail = Arr::only($validateUser, ['jabatan_id', 'lokasi_id', 'shift_id', 'tempat_lahir', 'tanggal_lahir', 'alamat', 'telepon', 'status', 'jenis_kelamin']);
 
             if ($request->has('foto')) {
                 if ($fotoUser = $user->userDetail->foto) {

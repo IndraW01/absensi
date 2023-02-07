@@ -17,28 +17,35 @@
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span></a>
     </li>
+    <li class="nav-item {{ request()->routeIs('profile') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('profile') }}">
+            <i class="fas fa-fw fa-user"></i>
+            <span>Profile</span></a>
+    </li>
 
     <!-- Divider -->
     <hr class="sidebar-divider">
 
     <!-- Heading -->
     <div class="sidebar-heading">
-        Master
+        Menu
     </div>
 
     <!-- Nav Item - Master Menu -->
     <li
-        class="nav-item {{ (request()->routeIs('master.user.*') ? 'active' : request()->routeIs('master.role.*')) ? 'active' : (request()->routeIs('master.permission.*') ? 'active' : (request()->routeIs('master.shift.*') ? 'active' : (request()->routeIs('master.lokasi.*') ? 'active' : (request()->routeIs('master.status.*') ? 'active' : (request()->routeIs('master.jabatan.*') ? 'active' : (request()->routeIs('master.cuti.format.*') ? 'active' : '')))))) }}">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
-            aria-controls="collapseTwo">
+        class="nav-item {{ (request()->routeIs('master.user.*') ? 'active' : request()->routeIs('master.role.*')) ? 'active' : (request()->routeIs('master.permission.*') ? 'active' : (request()->routeIs('master.shift.*') ? 'active' : (request()->routeIs('master.lokasi.*') ? 'active' : (request()->routeIs('master.status.*') ? 'active' : (request()->routeIs('master.jabatan.*') ? 'active' : (request()->routeIs('master.cuti.format.*') ? 'active' : (request()->routeIs('master.absen.*') ? 'active' : ''))))))) }}">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
+            aria-controls="collapseOne">
             <i class="fas fa-th-list"></i>
             <span>Master</span>
         </a>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div id="collapseOne" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Data Master</h6>
+                <h6 class="collapse-header">Menu Master</h6>
                 <a class="collapse-item {{ request()->routeIs('master.user.*') ? 'active' : '' }}"
                     href="{{ route('master.user.index') }}"><i class="fas fa-users fa-fw"></i> Users</a>
+                <a class="collapse-item {{ request()->routeIs('master.absen.*') ? 'active' : '' }}"
+                    href="{{ route('master.absen.index') }}"><i class="far fa-clipboard fa-fw"></i> Absen</a>
                 <a class="collapse-item {{ request()->routeIs('master.role.*') ? 'active' : '' }}"
                     href="{{ route('master.role.index') }}"><i class="fas fa-user-tag fa-fw"></i> Roles</a>
                 <a class="collapse-item {{ request()->routeIs('master.permission.*') ? 'active' : '' }}"
@@ -57,11 +64,22 @@
         </div>
     </li>
 
-    <!-- Nav Item - Absen -->
-    <li class="nav-item">
-        <a class="nav-link" href="#">
+    <!-- Nav Item - Master Menu -->
+    <li class="nav-item {{ request()->routeIs('absen.*') ? 'active' : '' }}">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
+            aria-controls="collapseTwo">
             <i class="far fa-clipboard"></i>
-            <span>Absen</span></a>
+            <span>Absen</span>
+        </a>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Menu Absen</h6>
+                <a class="collapse-item {{ request()->routeIs('absen.index') ? 'active' : '' }}"
+                    href="{{ route('absen.index') }}"><i class="fas fa-camera fa-fw"></i> Absen</a>
+                <a class="collapse-item {{ request()->routeIs('absen.myAbsen') ? 'active' : '' }}"
+                    href="{{ route('absen.myAbsen') }}"><i class="far fa-clipboard fa-fw"></i> My Absen</a>
+            </div>
+        </div>
     </li>
 
     <!-- Nav Item - History Absen -->

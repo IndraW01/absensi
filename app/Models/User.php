@@ -76,4 +76,9 @@ class User extends Authenticatable
     {
         return $this->hasOneThrough(UserCuti::class, UserDetail::class);
     }
+
+    public function absen()
+    {
+        return $this->hasMany(Absen::class);
+    }
 }

@@ -2,18 +2,21 @@
 
 namespace App\Traits;
 
+use App\Models\Absen;
 use App\Models\Jabatan;
 use App\Models\Lokasi;
 use App\Models\Shift;
 use App\Models\Status;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Yajra\DataTables\Facades\DataTables;
 
 trait DatatableTrait
 {
+    // Datatable Master
     public function getUsers()
     {
         $users = User::query()->with('roles')->latest()->get();
@@ -64,6 +67,7 @@ trait DatatableTrait
             ->addColumn('action', function (Shift $shift) {
                 return view('components.partials.action', ['data' => $shift->slug, 'route' => 'shift', 'title' => 'Shift']);
             })
+            ->rawColumns(['action'])
             ->make(true);
     }
 
@@ -75,6 +79,7 @@ trait DatatableTrait
             ->addColumn('action', function (Lokasi $lokasi) {
                 return view('components.partials.action', ['data' => $lokasi->slug, 'route' => 'lokasi', 'title' => 'Lokasi']);
             })
+            ->rawColumns(['action'])
             ->make(true);
     }
 
@@ -86,6 +91,7 @@ trait DatatableTrait
             ->addColumn('action', function (Status $status) {
                 return view('components.partials.action', ['data' => $status->slug, 'route' => 'status', 'title' => 'Status']);
             })
+            ->rawColumns(['action'])
             ->make(true);
     }
 
@@ -97,6 +103,61 @@ trait DatatableTrait
             ->addColumn('action', function (Jabatan $jabatan) {
                 return view('components.partials.action', ['data' => $jabatan->slug, 'route' => 'jabatan', 'title' => 'Jabatan']);
             })
+            ->rawColumns(['action'])
+            ->make(true);
+    }
+
+    // Datatable My Absen
+    public function getMyAbsens($tanggalAwal = null, $tanggalAkhir = null)
+    {
+        if (!is_null($tanggalAwal) && !is_null($tanggalAkhir)) {
+            $queryAbsens = Absen::query()->whereUserId(Auth::id())->whereBetween('tanggal', [$tanggalAwal, $tanggalAkhir])->orderByDesc('tanggal');
+        } else {
+            $queryAbsens = Absen::query()->whereUserId(Auth::id())->orderByDesc('tanggal');
+        }
+        $myAbsens = $queryAbsens->get();
+        return DataTables::of($myAbsens)
+            ->addIndexColumn()
+            ->addColumn('status', function (Absen $absen) {
+                if ($absen->status == 'masuk') {
+                    return '<span class="badge badge-primary text-bg-primary">' . $absen->status . '</span>';
+                } else {
+                    return '<span class="badge badge-warning text-bg-warning">' . $absen->status . '</span>';
+                }
+            })
+            ->addColumn('action', function (Absen $absen) {
+                return '<a href="' . route('absen.show', ['absen' => $absen->id]) . '" class="edit btn btn-success btn-sm"><i
+                                class="fas fa-eye fa-fw"></i> Show
+                        </a>';
+            })
+            ->rawColumns(['status', 'action'])
+            ->make(true);
+    }
+
+    // Datatable All Absen
+    public function getAllAbsen($tanggalAwal = null, $tanggalAkhir = null)
+    {
+        if (!is_null($tanggalAwal) && !is_null($tanggalAkhir)) {
+            $queryAbsens = Absen::query()->whereBetween('tanggal', [$tanggalAwal, $tanggalAkhir])->orderByDesc('tanggal');
+        } else {
+            $queryAbsens = Absen::query()->orderByDesc('tanggal');
+        }
+        $myAbsens = $queryAbsens->get();
+        return DataTables::of($myAbsens)
+            ->addIndexColumn()
+            ->addColumn('status', function (Absen $absen) {
+                if ($absen->status == 'masuk') {
+                    return '<span class="badge badge-primary text-bg-primary">' . $absen->status . '</span>';
+                } else {
+                    return '<span class="badge badge-warning text-bg-warning">' . $absen->status . '</span>';
+                }
+            })
+            ->addColumn('action', function (Absen $absen) {
+                return '<a href="' . route('absen.show', ['absen' => $absen->id]) . '" class="edit btn btn-success btn-sm"><i
+                                class="fas fa-eye fa-fw"></i> Show
+                        </a>';
+            })
+            ->rawColumns(['status', 'action'])
             ->make(true);
     }
 }

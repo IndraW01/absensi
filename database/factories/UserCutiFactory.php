@@ -17,10 +17,10 @@ class UserCutiFactory extends Factory
      */
     public function definition()
     {
-        $users = UserDetail::query()->get()->pluck('id')->toArray();
+        $userDetails = UserDetail::query()->get()->pluck('id')->toArray();
 
         return [
-            'user_detail_id' => fake()->unique()->randomElement($users),
+            'user_detail_id' => fake()->unique()->randomElement($userDetails),
             'cuti' => 10,
             'cuti_bersama' => 10,
             'cuti_menikah' => 10,

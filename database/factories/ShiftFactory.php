@@ -21,7 +21,17 @@ class ShiftFactory extends Factory
         return [
             'name' => $fakeId->unique()->randomElement(['Libur', 'Office', 'Siang', 'Malam']),
             'slug' => fn (array $attributes) => Str::slug($attributes['name']),
-            'jam_masuk' => $fakeId->unique()->randomElement(['00:00', '08:00', '13:00', '21:00']),
+            'jam_masuk' => function (array $attributes) {
+                if ($attributes['name'] == 'Office') {
+                    return '08:00';
+                } else if ($attributes['name'] == 'Siang') {
+                    return '13:00';
+                } else if ($attributes['name'] == 'Malam') {
+                    return '21:00';
+                } else if ($attributes['name'] == 'Libur') {
+                    return '00:00';
+                }
+            },
             'jam_keluar' => function (array $attributes) {
                 if ($attributes['jam_masuk'] == '00:00') {
                     return '00:00';

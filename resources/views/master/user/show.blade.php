@@ -11,7 +11,7 @@
                 <div class="card-body">
                     <div class="row justify-content-between align-items-center">
                         <div class="col-6">
-                            <img class="img-profile rounded-circle"
+                            <img class="img-thumbnail img-profile"
                                 src="{{ asset($user->userDetail->foto ? 'storage/profile/' . $user->userDetail->foto : 'assets/img/undraw_profile.svg') }}"
                                 width="300">
                         </div>
@@ -24,6 +24,9 @@
                                         class="badge badge-warning">Belum
                                         Update</span>'!!} </li>
                                 <li>Lokasi : {!! $user->userDetail->lokasi->name ?? '<span
+                                        class="badge badge-warning">Belum
+                                        Update</span>'!!} </li>
+                                <li>Shift : {!! $user->userDetail->shift->name ?? '<span
                                         class="badge badge-warning">Belum
                                         Update</span>'!!} </li>
                                 <li>Tempat Lahir : {!! $user->userDetail->tempat_lahir ?? '<span

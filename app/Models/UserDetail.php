@@ -13,6 +13,7 @@ class UserDetail extends Model
         'user_id',
         'jabatan_id',
         'lokasi_id',
+        'shift_id',
         'tempat_lahir',
         'tanggal_lahir',
         'jenis_kelamin',
@@ -41,5 +42,10 @@ class UserDetail extends Model
     public function lokasi()
     {
         return $this->belongsTo(Lokasi::class);
+    }
+
+    public function shift()
+    {
+        return $this->belongsTo(Shift::class);
     }
 }

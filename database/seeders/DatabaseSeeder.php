@@ -20,11 +20,10 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             ShiftSeeder::class,
             LokasiSeeder::class,
-            // StatusSeeder::class,
-            UserDetailSeeder::class,
-            UserCutiSeeder::class,
-            CutiFormatSeeder::class,
             JabatanSeeder::class,
+            UserDetailSeeder::class,
+            // UserCutiSeeder::class,
+            CutiFormatSeeder::class,
         ]);
     }
 }
